@@ -1,0 +1,97 @@
+-- ==============================================================
+-- LIBRARIES
+-- ==============================================================
+
+local Core = require("Core")
+
+-- ==============================================================
+-- SCRIPTS
+-- ==============================================================
+local Joystick = require("Joystick")
+
+-- ==============================================================
+-- HERO
+-- ==============================================================
+local HeroScript = {}
+
+function HeroScript:CreateNewHero()
+    local x, y = 15.5, 15.5
+    local dx, dy = 0, 1
+    return DCEI.CreateUnit(1, 1, "Hero", x, y, dx, dy)
+end
+
+function HeroScript:HookupHero(unit)
+    Joystick:Hookup(unit)
+end
+
+-- ==============================================================
+-- WEAPONS
+-- ==============================================================
+
+function HeroScript:UpdateHeroAmmoDisplay(name, count, unit)
+    local text = "<size=50%>" .. name .. " - " .. tostring(count)
+    local options = {
+        center_at_unit_top = true,
+        offset = { up = 0.25 },
+    }
+    DCEI.HideUnitLabel(unit)
+    DCEI.ShowUnitLabel(unit, text, options)
+end
+
+function HeroScript:FireBestWeapon(unit)
+    local has_assault_ammo = DCEI.GetUnitBehaviorStackCount(unit, DCEI.Behavior("Hero AssaultRifle Ammo")) > 0
+    local has_shotgun_ammo = DCEI.GetUnitBehaviorStackCount(unit, DCEI.Behavior("Hero Shotgun Ammo")) > 0
+    local default_weapon = DCEI.Ability("Hero Pistol")
+
+    local weapon = default_weapon
+    if has_shotgun_ammo then
+        weapon = DCEI.Ability("Hero Shotgun")
+    elseif has_assault_ammo then
+        weapon = DCEI.Ability("Hero AssaultRifle")
+    end
+
+    local dur = DCEI.GetValueFromDataPath({ "abilities", weapon, "stats", "finishTime" })
+    Joystick:PauseMovement(dur)
+
+    local immediate = false
+    local pos = DCEI.GetMouseWorldPosition2D()
+    DCEI.CastAbilityAtPosition(weapon, unit, pos.x, pos.y, immediate)
+end
+
+function HeroScript:StartFiringWeapon(unit)
+    local function OnTick()
+        self:FireBestWeapon(unit)
+    end
+    -- only one weapon timer should exist at a time
+    self:StopFiringWeapon()
+
+    -- fire weapon every game tick while the timer runs
+    self.weapon_timer = Core.Timer.Real.New({
+        tick = OnTick,
+    })
+end
+
+function HeroScript:StopFiringWeapon()
+    if self.weapon_timer then
+        self.weapon_timer:Destroy()
+    end
+end
+
+function HeroScript:OnHeroBehaviorStackUpdate(u)
+    local shotgun_ammo = DCEI.GetUnitBehaviorStackCount(u, DCEI.Behavior("Hero Shotgun Ammo"))
+    local assault_ammo = DCEI.GetUnitBehaviorStackCount(u, DCEI.Behavior("Hero AssaultRifle Ammo"))
+
+    -- update ammo display from behavior count
+    -- shotgun ammo overrides assault ammo
+    if shotgun_ammo > 0 then
+        local display_name = "Shotgun"
+        self:UpdateHeroAmmoDisplay(display_name, shotgun_ammo, u)
+    elseif assault_ammo > 0 then
+        local display_name = "Assault"
+        self:UpdateHeroAmmoDisplay(display_name, assault_ammo, u)
+    else
+        DCEI.HideUnitLabel(u)
+    end
+end
+
+return HeroScript

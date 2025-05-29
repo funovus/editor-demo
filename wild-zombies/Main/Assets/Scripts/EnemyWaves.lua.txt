@@ -1,0 +1,194 @@
+-- ==============================================================
+-- LIBRARIES
+-- ==============================================================
+
+local Core = require("Core")
+
+-- ==============================================================
+-- CONSTANTS
+-- ==============================================================
+
+local ENEMY_TEAM = -1
+local SPAWN_POINT_LIST = {
+    { x = 7.85, y = 15 },
+    { x = 16, y = 21 },
+    { x = 24.2, y = 15 },
+}
+local BRAZIERS = {
+    { DCEI.FindUnitAtPosition("Prop Brazier", 7.5, 12), DCEI.FindUnitAtPosition("Prop Brazier", 7.5, 18) },
+    { DCEI.FindUnitAtPosition("Prop Brazier", 13, 22), DCEI.FindUnitAtPosition("Prop Brazier", 19, 22) },
+    { DCEI.FindUnitAtPosition("Prop Brazier", 24.5, 12), DCEI.FindUnitAtPosition("Prop Brazier", 24.5, 18) },
+}
+
+local EnemyWaves = {
+    round = 0,
+    are_enemies_spawning = false,
+    game_instance = 1,
+}
+
+function EnemyWaves:ResetEnemyWaves()
+    self.round = 0
+    self.are_enemies_spawning = false
+    self:RemoveEnemies()
+    -- advance game instance
+    self.game_instance = self.game_instance + 1
+end
+
+function EnemyWaves:RemoveEnemies()
+    -- remove all enemy units
+    local enemy_unit_list = DCEI.FindUnitsByTeamId(ENEMY_TEAM)
+    for _, unit in ipairs(enemy_unit_list) do
+        DCEI.RemoveUnit(unit)
+    end
+end
+
+-- ==============================================================
+-- ENEMIES
+-- ==============================================================
+
+function EnemyWaves:RunEnemyAiBehavior(unit, player_hero)
+    DCEI.TriggerAddTimerEventElapsed(DCEI.Coroutine(function()
+        local game_tick_duration = 0.125
+        -- move enemy towards the hero every game update
+        while DCEI.UnitIsAlive(unit) and DCEI.UnitIsAlive(player_hero) do
+            -- For demonstration purposes, showing that for 3D positions
+            -- the z value is equivalent to the y value of 2D positions.
+            -- For 3D positions, Y will refer to the vertical height of the point.
+            local hero_pos_2D = DCEI.GetUnitPosition2D(player_hero)
+            local hero_pos_3D = DCEI.GetUnitPosition3D(player_hero)
+            local x = hero_pos_2D.x or hero_pos_2D.x
+            local y = hero_pos_2D.y or hero_pos_3D.z
+            DCEI.MoveAttack(unit, x, y)
+            DCEI.Wait(game_tick_duration)
+        end
+    end), 0.1)
+    
+end
+
+function EnemyWaves:GetEnemySpawnPoint(gate_index)
+    -- spawn points on terrain that align with gate props
+    local pos = SPAWN_POINT_LIST[gate_index]
+
+    -- add some random offset so enemies don't stack on top of each other
+    local random_offset = 0.1
+    pos.x = pos.x + Core.Random.GetNumber(-1 * random_offset, random_offset)
+    pos.y = pos.y + Core.Random.GetNumber(-1 * random_offset, random_offset)
+
+    return pos.x, pos.y
+end
+
+function EnemyWaves:SpawnEnemyAtGate(gate_index)
+    local ghoul_chance = 0.10
+    local d100 = math.random()
+    local enemy_type = d100 <= ghoul_chance and DCEI.Unit("Enemy Ghoul") or DCEI.Unit("Enemy Zombie")
+
+    local enemy_team_id = -1
+    local x, y = self:GetEnemySpawnPoint(gate_index)
+    local dx, dy = 0, -1
+    DCEI.CreateUnit(enemy_team_id, enemy_team_id, enemy_type, x, y, dx, dy)
+end
+
+-- ==============================================================
+-- SPAWN WAVES
+-- ==============================================================
+
+function EnemyWaves:IncrementRound()
+    self.round = self.round + 1
+end
+
+function EnemyWaves:StartNextRound()
+    self:IncrementRound()
+
+    -- display current round
+    DCEI.ShowFeedbackMessage("ROUND " .. tostring(self.round))
+    DCEI.TriggerAddTimerEventElapsed(DCEI.Coroutine(function()
+        DCEI.Wait(1)
+
+        -- display round start
+        DCEI.ShowFeedbackMessage("START!")
+        DCEI.Wait(1)
+
+        -- start spawning waves, using some magic numbers provide a decent difficulty progression
+        local wave_count = math.ceil(self.round / 2) + 2
+        self:SpawnEnemyWaves(wave_count)
+    end), 0.1)
+end
+
+function EnemyWaves:AreAnyEnemiesAlive()
+    local enemy_unit_list = DCEI.FindUnitsByTeamId(ENEMY_TEAM)
+    for _, unit in ipairs(enemy_unit_list) do
+        if DCEI.UnitIsAlive(unit) then
+            return true
+        end
+    end
+end
+
+function EnemyWaves:IsRoundOver()
+    return not self.are_enemies_spawning and not self:AreAnyEnemiesAlive()
+end
+
+function EnemyWaves:GetRandomGateIndex()
+    return Core.Table.GetRandomIndex(SPAWN_POINT_LIST)
+end
+
+function EnemyWaves:SpawnEnemyWaves(wave_count)
+    local game_instance = self.game_instance -- store game instance so we can skip waits if game resets
+    local min_enemies = math.ceil(self.round / 2)
+    local max_enemies = min_enemies * 3
+
+    -- starts the round
+    self.are_enemies_spawning = true
+
+    for n = 1, wave_count do
+        if game_instance == self.game_instance then
+            -- wait a few secounds between each wave
+            DCEI.TriggerAddTimerEventElapsed(DCEI.Coroutine(function()
+                local wave_interval = math.random(1, 3)
+                DCEI.Wait(wave_interval)
+
+                -- spawn enemies at a random gate
+                local gate_index = self:GetRandomGateIndex()
+                local enemy_count = math.random(min_enemies, max_enemies)
+                self:SpawnEnemiesAtGate(gate_index, enemy_count)
+            end), 0.1)
+        end
+    end
+
+    -- the round ends when spawning is over and all enemies are defeated
+    self.are_enemies_spawning = false
+end
+
+function EnemyWaves:SpawnEnemiesAtGate(gate_index, enemy_count)
+    local game_instance = self.game_instance -- store game instance so we can skip waits if game resets
+    local spawn_inteval = 0.125
+
+    -- play spawn animation on nearby brazier props
+    DCEI.SendSendCustomEventActorAction(BRAZIERS[gate_index][1], {
+        identifier = "UnitSpawnEvent",
+    })
+    DCEI.SendSendCustomEventActorAction(BRAZIERS[gate_index][2], {
+        identifier = "UnitSpawnEvent",
+    })
+
+    -- spawn enemies with brief delay between each spawn
+    for n = 1, enemy_count do
+        DCEI.TriggerAddTimerEventElapsed(DCEI.Coroutine(function()
+            if game_instance == self.game_instance then
+                self:SpawnEnemyAtGate(gate_index)
+                DCEI.Wait(spawn_inteval)
+            end
+        end), 0.1)
+    end
+end
+
+function EnemyWaves:OnEnemyDied(u)
+    -- check if round should end when enemy dies
+    if self:IsRoundOver() then
+        local round_delay = 1
+        DCEI.TriggerAddTimerEventElapsed(function()
+            self:StartNextRound()
+        end, round_delay)
+    end
+end
+
+return EnemyWaves

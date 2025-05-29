@@ -1,0 +1,2 @@
+-- If you're looking for the code, switch the data editor from Wild Zombies/Maps/EntryMap to Wild Zombies/Main,
+-- or manually go to Wild Zombies/Main/Trigger.lua.txt

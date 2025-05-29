@@ -1,0 +1,44 @@
+<UI xmlns:bind="https://platform.wildsky.dev/xml/ui/bind">
+    <Frame layout="flex" heightPercent="100" widthPercent="100" frameImageColor="#000000ff" alpha="1" name="Game/BlackScreen" />
+    <Frame layout="flex" height="500" width="600" name="Game/Instructions">
+        <Frame padding="3">
+            <Mask frameImage="summonrevolt_icon_frame_04">
+                <Frame heightPercent="100" widthPercent="100" frameImageColor="r: 0, g: 0, b: 0, a: 1" />
+            </Mask>
+        </Frame>
+        <Frame flexDirection="column" justifyContent="space-around" frameImage="summonrevolt_icon_frame_04" padding="30" heightPercent="100" widthPercent="100">
+            <!-- As per UI naming guide; frames should be ProperCase -->
+            <Frame id="LogoImage" frameImage="zombie_survival_logo" useImageSizeRatio="0.5" />
+            <include name="Templates/TextTitle">
+                <Text id="Text" text="Instructions" outlineColor="@_PRIMARY_COLOR/DARKER" />
+            </include>
+            <Frame flexDirection="column" heightPercent="30" justifyContent="space-around">
+                <include name="Game/Instructions/Text">
+                    <Text id="Text" text="- WASD to Move" />
+                </include>
+                <include name="Game/Instructions/Text">
+                    <Text id="Text" text="- Mouse to aim (left-click to shoot)" />
+                </include>
+                <include name="Game/Instructions/Text">
+                    <Text id="Text" text="- Collect powerups" />
+                </include>
+                <include name="Game/Instructions/Text">
+                    <Text id="Text" text="- Try to reach new high score" />
+                </include>
+            </Frame>
+            <!-- id's for includes, however, should be snake_case -->
+            <include id="start_button" name="Templates/ActionButton">
+                <!-- You can override the properties of included frame's childrens, if they have an ID, by using the same ID -->
+                <Text id="ButtonText" text="LET'S GO!" />
+            </include>
+        </Frame>
+    </Frame>
+    <Text layout="flex" id="Text" text="Placeholder Text" outline="false" shadow="false" color="@_SECONDARY_COLOR" alignment="start" widthPercent="100" name="Game/Instructions/Text" />
+    <Button layout="flex" padding="25" frameImage="summonrevolt_icon_button_01_locked" frameImageColor="@_PRIMARY_COLOR" name="Templates/ActionButton">
+        <Text id="ButtonText" text="Perform Action" outlineColor="r: 0.361, g: 0.059, b: 0.059, a: 1" outlineWidth="0.5" outsideOutline="true" shadowColor="r: 0, g: 0, b: 0, a: 0" />
+    </Button>
+    <Text layout="flex" id="Text" text="Placeholder Text" color="@_SECONDARY_COLOR" outlineWidth="0.5" outsideOutline="true" fontSize="30" shadowColor="r: 0, g: 0, b: 0, a: 0" widthPercent="100" name="Templates/TextTitle" />
+    <Constant value="#e75965ff" name="_PRIMARY_COLOR" />
+    <Constant value="r: 0.361, g: 0.059, b: 0.059, a: 1" name="_PRIMARY_COLOR/DARKER" />
+    <Constant value="#a4cc8dff" name="_SECONDARY_COLOR" />
+</UI>

@@ -1,0 +1,157 @@
+-- ==============================================================
+-- LIBRARIES
+-- ==============================================================
+
+local Core = require("Core")
+
+-- ==============================================================
+-- SCRIPTS
+-- These scripts are stored in 'Wild Zombies\Main\Assets\Scripts'
+-- ==============================================================
+
+local HeroScript = require("HeroScript")
+local UI = require("UI")
+local EnemyWaves = require("EnemyWaves")
+
+-- ==============================================================
+-- CONSTANTS
+-- ==============================================================
+
+local ENEMY_TEAM = -1
+
+-- ==============================================================
+-- LOCAL VARIABLES
+-- ==============================================================
+
+local hero_unit = DCEI.FindUnit("Hero")
+local score = 0
+
+-- ==============================================================
+-- FUNCTIONS
+-- ==============================================================
+
+local function PauseGame()
+    -- Core.GameSpeed.Set(0)
+end
+
+local function UnPauseGame()
+    -- Core.GameSpeed.ResetToDefaultValue()
+end
+
+local function StartGame()
+    UnPauseGame()
+    EnemyWaves:StartNextRound()
+end
+
+local function OnMapStart()
+    -- On game start callback
+    local function GameStart()
+        StartGame()
+    end
+    -- update UI
+    -- Core.HideDefaultUi()
+    UI:InitializeGameInstructions(GameStart)
+    UI:UpdateScoreUi(score)
+
+    -- start game
+    PauseGame()
+    HeroScript:HookupHero(hero_unit)
+end
+
+local function ResetGame()
+    EnemyWaves:ResetEnemyWaves()
+    hero_unit = HeroScript:CreateNewHero()
+end
+
+local function PlayEndGameSequence()
+    DCEI.TriggerAddTimerEventElapsed(DCEI.Coroutine(function()
+        -- wait and then fade out
+        DCEI.Wait(1)
+        UI:FadeToBlack(1)
+
+        -- display game over message and reset game state while screen is black
+        DCEI.Wait(1)
+        DCEI.ShowFeedbackMessage("GAME OVER")
+        ResetGame()
+
+        -- reset game and fade in
+        DCEI.Wait(1)
+        UI:FadeIn(1)
+
+        -- re-use map start functions to restart the game
+        -- Either DCEI.Wait() or DCEI.TriggerAddTimerEventElapsed() can be used
+        -- The difference is DCEI.Wait() will hold up any code written after it from calling
+        -- (including in the parent function where it was called)
+        -- Whereas TriggerAddTimerEventElapsed() starts a new coroutine that does not
+        DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0, false, true)
+    end), 0, false, true)
+end
+
+-- ==============================================================
+-- TRIGGER CALLBACKS
+-- ==============================================================
+
+local function OnUnitEnterRegion()
+    local u = DCEI.TriggeringUnit
+    local team = DCEI.GetUnitTeamId(u)
+
+    -- start chase "AI" for enemies when they spawn
+    if team == ENEMY_TEAM then
+        EnemyWaves:RunEnemyAiBehavior(u, hero_unit)
+    end
+
+    -- use arbitrary behavior to display names of powerup units
+    if DCEI.GetUnitBehaviorStackCount(u, DCEI.Behavior("System Show Display Name")) > 0 then
+        local name = DCEI.GetUnitDisplayName(u)
+        local text = "<size=50%>" .. name
+        local options = { offset = { up = 0.75 } }
+        DCEI.ShowUnitLabel(u, text, options)
+    end
+end
+
+local function OnUnitDied(killing_unit)
+    -- killing_unit not referenced,
+    -- but included to demonstrate that "TriggerAddUnitDiedEvent" passes this to the callback
+    local u = DCEI.TriggeringUnit
+    local team = DCEI.GetUnitTeamId(u)
+
+    if team == ENEMY_TEAM then
+        -- increment player score value
+        local score_value = DCEI.GetUnitTagCount(u, "score")
+        score = score + score_value
+        UI:UpdateScoreUi(score)
+        EnemyWaves:OnEnemyDied(u)
+    elseif u == hero_unit then
+        -- play game over sequence if hero dies
+        PlayEndGameSequence()
+    end
+end
+
+local function BehaviorStackUpdate()
+    local u = DCEI.TriggeringUnit
+    local b = DCEI.TriggeringBehaviorName -- Not used; but included for demonstration purposes
+
+    if u == hero_unit then
+        HeroScript:OnHeroBehaviorStackUpdate(u)
+    end
+end
+
+local function OnMouseDown()
+    HeroScript:StartFiringWeapon(hero_unit)
+end
+
+local function OnMouseUp()
+    HeroScript:StopFiringWeapon()
+end
+
+-- ==============================================================
+-- INITIALIZE
+-- ==============================================================
+
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+DCEI.TriggerAddMouseDownEvent(0, OnMouseDown)
+DCEI.TriggerAddMouseUpEvent(0, OnMouseUp)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddUnitEnterRegionEvent(DCEI.UnitAny, DCEI.FindRegion("WORLD"), OnUnitEnterRegion)
+DCEI.TriggerAddBehaviorStackIncreaseEvent(DCEI.UnitAny, BehaviorStackUpdate)
+DCEI.TriggerAddBehaviorStackDecreaseEvent(DCEI.UnitAny, BehaviorStackUpdate)

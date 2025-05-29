@@ -1,0 +1,209 @@
+{
+    "units": {
+        "Enemy Ghoul": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4375
+                },
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 1.5
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Ghoul Attack"
+                ],
+                "behaviorList": [
+                    "Enemy Ghoul Behavior ActiveState"
+                ],
+                "tagList": [
+                    {
+                        "name": "score",
+                        "count": 2
+                    }
+                ]
+            }
+        },
+        "Enemy Zombie": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "health": {
+                    "maxHealth": 2
+                },
+                "movement": {
+                    "moveSpeed": 0.5
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Zombie Attack"
+                ],
+                "tagList": [
+                    {
+                        "name": "score",
+                        "count": 1
+                    }
+                ]
+            }
+        },
+        "Hero": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardUnit",
+            "components": {
+                "health": {
+                    "maxHealth": 3
+                },
+                "movement": {
+                    "moveSpeed": 3
+                },
+                "turning": {
+                    "turningSpeed": 2700
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Hero Pistol",
+                    "Hero AssaultRifle",
+                    "Hero Shotgun"
+                ],
+                "behaviorList": [
+                    "Hero Invulernability OnHit"
+                ]
+            },
+            "healthBar": {
+                "type": 3
+            }
+        },
+        "Hero AssaultRifle Missile": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_CMissile"
+        },
+        "Hero Pistol Missile": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_CMissile"
+        },
+        "Hero Shotgun Missile": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_CMissile"
+        },
+        "Item AssaultRifle": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardItem",
+            "references": {
+                "behaviorList": [
+                    "Item AssaultRifle Search"
+                ]
+            },
+            "displayName": "Assault Rifle"
+        },
+        "Item FireOrb": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardItem",
+            "references": {
+                "behaviorList": [
+                    "Item FireOrb Search"
+                ]
+            },
+            "displayName": "FIRE ORB!"
+        },
+        "Item Freeze": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardItem",
+            "references": {
+                "behaviorList": [
+                    "Item Freeze Search"
+                ]
+            },
+            "displayName": "FREEZE!"
+        },
+        "Item Rage": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardItem",
+            "references": {
+                "behaviorList": [
+                    "Item Rage Search"
+                ]
+            },
+            "displayName": "RAGE!"
+        },
+        "Item Shotgun": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_StandardItem",
+            "references": {
+                "behaviorList": [
+                    "Item Shotgun Search"
+                ]
+            },
+            "displayName": "Shotgun"
+        },
+        "PowerUp FireOrb Missile": {
+            "prefix": "",
+            "template": false,
+            "baseUnit": "_CMissile",
+            "references": {
+                "behaviorList": [
+                    "PowerUp FireOrb TimedLife"
+                ]
+            }
+        },
+        "Prop Brazier": {
+            "baseUnit": "_StandardHelper"
+        },
+        "_StandardEnemy": {
+            "template": true,
+            "comment": "We start template names with an underscore, to make sure it's clear they're templates.\n\nIn this enemy template, we have the behaviors for dropping powerups. This way we don't have to manually copy these to each new enemy unit we create; they can be inherited by this template as a parent.",
+            "baseUnit": "_StandardUnit",
+            "references": {
+                "behaviorList": [
+                    "Item AssaultRifle DropChance",
+                    "Item Shotgun DropChance",
+                    "Item Freeze DropChance",
+                    "Item Rage DropChance",
+                    "Item FireOrb DropChance",
+                    "Enemy Initial SpeedBoost"
+                ]
+            }
+        },
+        "_StandardItem": {
+            "prefix": "",
+            "template": true,
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "behaviorList": [
+                    "System Show Display Name"
+                ]
+            }
+        },
+        "_StandardUnit": {
+            "prefix": "",
+            "template": true,
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.25,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                }
+            }
+        }
+    }
+}

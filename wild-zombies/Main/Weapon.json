@@ -1,0 +1,34 @@
+{
+    "weapons": {
+        "Enemy Ghoul Attack": {
+            "prefix": "",
+            "template": false,
+            "effectName": "Enemy Ghoul Attack Search",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "forceCastFollowthrough": true,
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.375,
+                "range": 0.75,
+                "scanRange": 1.75
+            }
+        },
+        "Enemy Zombie Attack": {
+            "prefix": "",
+            "template": false,
+            "effectName": "Enemy Zombie Attack Search",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "forceCastFollowthrough": true,
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.375,
+                "range": 0.75,
+                "scanRange": 1.75
+            }
+        }
+    }
+}

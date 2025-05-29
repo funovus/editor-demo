@@ -1,0 +1,47 @@
+{
+    "abilities": {
+        "Hero AssaultRifle": {
+            "prefix": "",
+            "template": false,
+            "comment": "Consider viewing this ability in the \"Node Editor\" tab of the data window, if you aren't already, to get a clearer overview of the ability.",
+            "parent": "_StandardGun",
+            "effect": "Hero AssaultRifle Create",
+            "stats": {
+                "finishTime": 0.125
+            }
+        },
+        "Hero Pistol": {
+            "prefix": "",
+            "template": false,
+            "comment": "Consider viewing this ability in the \"Node Editor\" tab of the data window, if you aren't already, to get a clearer overview of the ability.",
+            "parent": "_StandardGun",
+            "effect": "Hero Pistol Create",
+            "stats": {
+                "prepTime": 0,
+                "finishTime": 0.21875
+            }
+        },
+        "Hero Shotgun": {
+            "prefix": "",
+            "template": false,
+            "comment": "Consider viewing this ability in the \"Node Editor\" tab of the data window, if you aren't already, to get a clearer overview of the ability.",
+            "parent": "_StandardGun",
+            "effect": "Hero Shotgun Create",
+            "stats": {
+                "finishTime": 0.25
+            }
+        },
+        "_StandardGun": {
+            "prefix": "",
+            "template": true,
+            "comment": "We start template names with an underscore, to make sure it's clear they're templates.",
+            "parent": "",
+            "abilityType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "range": 99,
+                "arc": 15
+            }
+        }
+    }
+}

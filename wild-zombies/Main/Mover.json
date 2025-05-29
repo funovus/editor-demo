@@ -1,0 +1,31 @@
+{
+    "movers": {
+        "Hero AssaultRifle Launch": {
+            "guidance": {
+                "acceleration": 25,
+                "speed": 25,
+                "maxSpeed": 25
+            }
+        },
+        "Hero Pistol Launch": {
+            "guidance": {
+                "acceleration": 12,
+                "speed": 12,
+                "maxSpeed": 12
+            }
+        },
+        "Hero Shotgun Launch": {
+            "guidance": {
+                "acceleration": 25,
+                "speed": 25,
+                "maxSpeed": 25
+            }
+        },
+        "PowerUp FireOrb Orbiter": {
+            "orbiting": {
+                "speed": 8,
+                "radius": 1.75
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "userDataTypes": {
+        "asdas": {
+            "properties": [
+                {
+                    "name": "sasd"
+                }
+            ]
+        }
+    },
+    "userDataValues": {
+        "asdas": {
+            "instances": {
+                "default": {
+                    "object": {
+                        "userDataType": "asdas",
+                        "value": {
+                            "properties": [
+                                {
+                                    "name": "sasd"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,873 @@
+{
+    "actors": {
+        "Enemy Death FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_alchemist_catbot_death"
+                },
+                "hostSiteOperations": [
+                    "SOp UpBy Dot25"
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Enemy Ghoul": {
+            "prefix": "",
+            "comment": "Note that we are using our \"_StandardEnemy\" template as a parent, so many fields are inherited.",
+            "parent": "_StandardEnemy",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "wildzombie_normal_blue"
+                },
+                "walkAnimationSpeed": 2,
+                "modelScale": 1.3
+            }
+        },
+        "Enemy Zombie": {
+            "prefix": "",
+            "comment": "Note that we are using our \"_StandardEnemy\" template as a parent, so many fields are inherited.",
+            "parent": "_StandardEnemy",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "zombie"
+                },
+                "walkAnimationSpeed": 2,
+                "modelScale": 2
+            }
+        },
+        "Hero": {
+            "prefix": "",
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "wildzombie_hero_eva"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitAbilityStop": {}
+                        },
+                        "actions": [
+                            {
+                                "stopAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Hero Invulernability"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Overcharge"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Hero Invulernability"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "removeMeshEffect": {
+                                    "effect": "Overcharge"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "PowerUp Rage Buff"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "BloodThirsty"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "PowerUp Rage Buff"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "removeMeshEffect": {
+                                    "effect": "BloodThirsty"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteWeapon": {
+                        "offset": {
+                            "forward": 0.5,
+                            "right": 0.2,
+                            "up": 0.7
+                        }
+                    }
+                },
+                "modelScale": 1.5
+            }
+        },
+        "Hero AssaultRifle Attack FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "actionActor": {
+                "effect": "Hero AssaultRifle Launch",
+                "launchSite": "SiteWeapon",
+                "targetSiteOperations": [
+                    "SOp UpBy Dot7"
+                ]
+            }
+        },
+        "Hero AssaultRifle Impact FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_angelwings_weapon_impact"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Hero AssaultRifle Missile": {
+            "prefix": "",
+            "parent": "_StandardMissile FX",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_centaurarcher_thintheherd"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            },
+                            {
+                                "create": {
+                                    "actor": "Hero AssaultRifle Impact FX"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Hero Pistol Attack FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "actionActor": {
+                "effect": "Hero Pistol Launch",
+                "launchSite": "SiteWeapon",
+                "targetSiteOperations": [
+                    "SOp UpBy Dot7"
+                ]
+            }
+        },
+        "Hero Pistol Impact FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_angelwings_weapon_impact"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Hero Pistol Missile": {
+            "prefix": "",
+            "parent": "_StandardMissile FX",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_drow_mage_white_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            },
+                            {
+                                "create": {
+                                    "actor": "Hero Pistol Impact FX"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Hero Shotgun Attack FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "actionActor": {
+                "effect": "Hero Shotgun Launch",
+                "launchSite": "SiteWeapon",
+                "targetSiteOperations": [
+                    "SOp UpBy Dot7"
+                ]
+            }
+        },
+        "Hero Shotgun Impact FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_goblinchef_weapon_impact"
+                },
+                "modelScale": 0.2
+            }
+        },
+        "Hero Shotgun Missile": {
+            "prefix": "",
+            "parent": "_StandardMissile FX",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_flamecannon_heatseekers_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Hero Shotgun Impact FX"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Item AssaultRifle": {
+            "prefix": "",
+            "parent": "_StandardItem"
+        },
+        "Item Aura FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_itemdrop_ring"
+                }
+            }
+        },
+        "Item FireOrb": {
+            "prefix": "",
+            "parent": "_StandardItem"
+        },
+        "Item Freeze": {
+            "prefix": "",
+            "parent": "_StandardItem"
+        },
+        "Item PickUp FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_hero_upgraded_buff"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Item Pickup FX Hook"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Item Rage": {
+            "prefix": "",
+            "parent": "_StandardItem"
+        },
+        "Item Shotgun": {
+            "prefix": "",
+            "parent": "_StandardItem"
+        },
+        "PowerUp FireOrb Impact FX": {
+            "prefix": "",
+            "template": false,
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_fireball_launch"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "PowerUp FireOrb Missile": {
+            "prefix": "",
+            "parent": "_StandardMissile FX",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_fireball_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp FireOrb Impact FX"
+                                }
+                            },
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "PowerUp Freeze Search Action Actor": {
+            "actionActor": {
+                "effect": "PowerUp Freeze Search",
+                "launchModelDetached": true,
+                "impactModel": "PowerUp Freeze Search Impact Model",
+                "impactModelDetached": true
+            }
+        },
+        "PowerUp Freeze Search Impact Model": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_icemage_frostnova_impact_aoe"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "duration",
+                                    "duration": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "duration"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "PowerUp Freeze Search SOp"
+                ],
+                "modelScale": 15
+            }
+        },
+        "PowerUp Freeze Search SOp": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 0
+                }
+            }
+        },
+        "Prop Brazier": {
+            "prefix": "",
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "darkspire_rank01_base"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "UnitSpawnEvent"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Prop Brazier Fire",
+                                    "hostSite": "SiteFire"
+                                }
+                            },
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 2,
+                                        "y": 1,
+                                        "z": 1
+                                    },
+                                    "duration": 0.0625,
+                                    "ease": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "AttackStep2",
+                                    "duration": 0.0625
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "AttackStep2"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 1,
+                                        "y": 1,
+                                        "z": 2
+                                    },
+                                    "duration": 0.0625,
+                                    "ease": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "AttackStep3",
+                                    "duration": 0.0625
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "AttackStep3"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 1,
+                                        "y": 2,
+                                        "z": 1
+                                    },
+                                    "duration": 0.0625,
+                                    "ease": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "AttackStep4",
+                                    "duration": 0.0625
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "AttackStep4"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 1,
+                                        "y": 1,
+                                        "z": 1
+                                    },
+                                    "duration": 0.125,
+                                    "ease": 30
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteFire": {
+                        "offset": {
+                            "up": 0.5
+                        }
+                    }
+                }
+            }
+        },
+        "Prop Brazier Fire": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_directionalexplosion"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 208,
+                                        "g": 103,
+                                        "b": 255
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp -90x"
+                ]
+            }
+        },
+        "SOp -90x": {
+            "siteOperation": {
+                "rotate": {
+                    "x": -90,
+                    "orientation": 1
+                }
+            }
+        },
+        "SOp UpBy Dot7": {
+            "siteOperation": {
+                "offset": {
+                    "y": 0.7
+                }
+            }
+        },
+        "_CUnit": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation"
+                }
+            }
+        },
+        "_StandardEnemy": {
+            "prefix": "",
+            "template": true,
+            "comment": "We start template names with an underscore, to make sure it's clear they're templates.\n\nIn this enemy template, we define a number of actor events we want all enemies to have. This way we don't have to manually copy these to each new enemy actor we create; they can be inherited by this template as a parent.",
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Death FX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "PowerUp Freeze Debuff"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Frozen"
+                                }
+                            },
+                            {
+                                "playAnimation": {
+                                    "clipId": 2
+                                }
+                            },
+                            {
+                                "pauseAnimation": {
+                                    "clipId": 2
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "PowerUp Freeze Debuff"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "removeMeshEffect": {
+                                    "effect": "Frozen"
+                                }
+                            },
+                            {
+                                "resumeAnimation": {
+                                    "clipId": 2
+                                }
+                            },
+                            {
+                                "stopAnimation": {
+                                    "clipId": 2
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "_StandardItem": {
+            "prefix": "",
+            "template": true,
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "chest_wood"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Item Aura FX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp DownBy 2"
+                                    ],
+                                    "duration": 1,
+                                    "append": true,
+                                    "ease": 29
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "squash",
+                                    "duration": 0.4
+                                }
+                            },
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 0.6,
+                                        "z": 0.6
+                                    },
+                                    "duration": 0.35
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "squash"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 1.5,
+                                        "y": 0.45,
+                                        "z": 1.5
+                                    },
+                                    "duration": 0.1,
+                                    "ease": 3
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "stretch",
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "stretch"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 0.45,
+                                        "y": 1.55,
+                                        "z": 0.45
+                                    },
+                                    "duration": 0.1,
+                                    "ease": 3
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "reset",
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "reset"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setScaleMultiplier": {
+                                    "scale": {
+                                        "x": 1,
+                                        "y": 1,
+                                        "z": 1
+                                    },
+                                    "duration": 0.2,
+                                    "ease": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "SOp UpBy 2"
+                ]
+            }
+        },
+        "_StandardMissile FX": {
+            "prefix": "",
+            "template": true,
+            "parent": "",
+            "unitActor": {
+                "resource": {
+                    "type": "None"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

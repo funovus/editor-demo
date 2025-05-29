@@ -1,0 +1,7 @@
+
+**/.playsettings
+.luarc.json
+tlconfig.lua
+_generated/
+Built-in/_UILayouts/
+/.vscode/

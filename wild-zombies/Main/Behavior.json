@@ -1,0 +1,222 @@
+{
+    "behaviors": {
+        "Enemy Ghoul Behavior ActiveState": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "durationRandomAddition": 1,
+            "defaultStackType": {},
+            "duration": 2,
+            "finalEffect": "Enemy Ghoul Behavior Apply InactiveState"
+        },
+        "Enemy Ghoul Behavior InactiveState": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "durationRandomAddition": 0.5,
+            "defaultStackType": {},
+            "duration": 1,
+            "finalEffect": "Enemy Ghoul Behavior Apply ActiveState",
+            "modifiers": {
+                "flags": {
+                    "suppressMovement": true
+                }
+            }
+        },
+        "Enemy Initial SpeedBoost": {
+            "defaultStackType": {},
+            "duration": 0.75,
+            "modifiers": {
+                "flags": {
+                    "suppressCollision": true,
+                    "ignorePathing": true
+                },
+                "moveSpeedModifier": {
+                    "unscaled": 2,
+                    "multiplierFactor": -1
+                }
+            }
+        },
+        "Hero AssaultRifle Ammo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "modifiers": {
+                "enabledAbilities": [
+                    "Hero AssaultRifle"
+                ]
+            }
+        },
+        "Hero Invulernability": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "duration": 1.5,
+            "modifiers": {
+                "flags": {
+                    "invulnerable": true
+                }
+            }
+        },
+        "Hero Invulernability OnHit": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "damageResponse": {
+                "chance": 1,
+                "cooldown": 1,
+                "effect": "Hero Apply Invulnerability"
+            }
+        },
+        "Hero Shotgun Ammo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "modifiers": {
+                "enabledAbilities": [
+                    "Hero Shotgun"
+                ]
+            }
+        },
+        "Item AssaultRifle DropChance": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "deathResponse": {
+                "chance": 0.05,
+                "effect": "Item AssaultRifle Spawn"
+            }
+        },
+        "Item AssaultRifle Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "periodicInterval": 0.125,
+            "periodicEffect": "Item AssaultRifle Search"
+        },
+        "Item FireOrb DropChance": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "deathResponse": {
+                "chance": 0.03,
+                "effect": "Item Freeze Spawn"
+            }
+        },
+        "Item FireOrb Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "periodicInterval": 0.125,
+            "periodicEffect": "Item FireOrb Search"
+        },
+        "Item Freeze DropChance": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "deathResponse": {
+                "chance": 0.03,
+                "effect": "Item Freeze Spawn"
+            }
+        },
+        "Item Freeze Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "periodicInterval": 0.125,
+            "periodicEffect": "Item Freeze Search"
+        },
+        "Item Rage DropChance": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "deathResponse": {
+                "chance": 0.03,
+                "effect": "Item Rage Spawn"
+            }
+        },
+        "Item Rage Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "periodicInterval": 0.125,
+            "periodicEffect": "Item Rage Search"
+        },
+        "Item Shotgun DropChance": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "deathResponse": {
+                "chance": 0.04,
+                "effect": "Item Shotgun Spawn"
+            }
+        },
+        "Item Shotgun Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "periodicInterval": 0.125,
+            "periodicEffect": "Item Shotgun Search"
+        },
+        "PowerUp FireOrb TimedLife": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "duration": 8,
+            "finalEffect": "Remove Source"
+        },
+        "PowerUp Freeze Debuff": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {
+                "refreshStack": true
+            },
+            "duration": 2,
+            "modifiers": {
+                "flags": {
+                    "suppressMovement": true,
+                    "suppressWeapon": true,
+                    "suppressAbility": true,
+                    "suppressTurning": true
+                }
+            }
+        },
+        "PowerUp Rage Buff": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {},
+            "duration": 6,
+            "modifiers": {
+                "moveSpeedModifier": {
+                    "unifiedFactor": 1
+                },
+                "abilityDamageModifier": {
+                    "unifiedFactor": 4
+                }
+            }
+        },
+        "System Show Display Name": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "defaultStackType": {}
+        }
+    }
+}

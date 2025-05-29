@@ -1,0 +1,49 @@
+-- ==============================================================
+-- LIBRARIES
+-- ==============================================================
+
+local Core = require("Core")
+
+local joystick_options = {
+    offset = { x = -256, y = -256 },
+}
+local joystick_unit = nil
+local pause_movement_timer = Core.Timer.Game.New({ duration = 0 })
+
+-- ==============================================================
+-- INPUT
+-- ==============================================================
+
+local function OnMove()
+    local axes = DCEI.TriggeringJoystickAxes
+
+    if joystick_unit and DCEI.UnitExists(joystick_unit) and (pause_movement_timer:GetTimeRemaining() <= 0) then
+        local pos = DCEI.GetUnitPosition2D(joystick_unit)
+
+        -- order unit to move in direction of joystick axes
+        DCEI.Move(joystick_unit, pos.x + axes.x, pos.y + axes.y)
+    end
+end
+
+local function OnRelease()
+    if joystick_unit and DCEI.UnitExists(joystick_unit) then
+        local pos = DCEI.GetUnitPosition2D(joystick_unit)
+
+        -- order unit to move to its current location to 'stop'
+        DCEI.Move(joystick_unit, pos.x, pos.y)
+    end
+end
+
+local Joystick = {}
+
+function Joystick:Hookup(unit)
+    joystick_unit = unit
+    DCEI.TriggerAddJoystickEventWithJoystickOptions(OnMove, joystick_options)
+    DCEI.TriggerAddJoystickReleaseEvent(OnRelease)
+end
+
+function Joystick:PauseMovement(time)
+    pause_movement_timer = Core.Timer.Game.New({ duration = time })
+end
+
+return Joystick

@@ -1,0 +1,637 @@
+{
+    "effects": {
+        "Enemy Ghoul Attack Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Enemy Ghoul Attack Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circleSector": {
+                        "outerRadius": 1,
+                        "angle": 120
+                    }
+                },
+                "effect": "Enemy Ghoul Attack Damage",
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 7
+            }
+        },
+        "Enemy Ghoul Behavior Apply ActiveState": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "Enemy Ghoul Behavior ActiveState",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Enemy Ghoul Behavior Apply InactiveState": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "Enemy Ghoul Behavior InactiveState",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Enemy Zombie Attack Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Enemy Zombie Attack Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circleSector": {
+                        "outerRadius": 1,
+                        "angle": 120
+                    }
+                },
+                "effect": "Enemy Zombie Attack Damage",
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 7
+            }
+        },
+        "Hero Apply Invulnerability": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "Hero Invulernability",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Hero AssaultRifle ConsumeAmmo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "removeBehavior": {
+                "behavior": "Hero AssaultRifle Ammo",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Hero AssaultRifle Create": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "persistent": {
+                "periodicCount": 3,
+                "location": 3,
+                "offsetStart": 7,
+                "offsetEnd": 3,
+                "periodicDurations": [
+                    0.0625
+                ],
+                "periodicEffects": [
+                    "Hero AssaultRifle Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "explicitOffset": {
+                            "forward": 10
+                        }
+                    }
+                ]
+            }
+        },
+        "Hero AssaultRifle Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Hero AssaultRifle ImpactSet": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Hero AssaultRifle Damage",
+                    "Remove Source"
+                ]
+            }
+        },
+        "Hero AssaultRifle Launch": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "launchMissile": {
+                "missileUnit": "Hero AssaultRifle Missile",
+                "startEffect": "Hero AssaultRifle ConsumeAmmo",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "Hero AssaultRifle Launch",
+                "areaSearchEffect": "Hero AssaultRifle Search",
+                "dynamicSearchArea": true
+            }
+        },
+        "Hero AssaultRifle Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 0.75,
+                        "length": 1
+                    }
+                },
+                "maxUnitCount": 1,
+                "effect": "Hero AssaultRifle ImpactSet",
+                "location": 4
+            }
+        },
+        "Hero Pistol Create": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "persistent": {
+                "periodicCount": 1,
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 3,
+                "periodicEffects": [
+                    "Hero Pistol Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "explicitOffset": {
+                            "forward": 8
+                        }
+                    }
+                ]
+            },
+            "debugLogContext": false
+        },
+        "Hero Pistol Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Hero Pistol ImpactSet": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Hero Pistol Damage",
+                    "Remove Source"
+                ]
+            }
+        },
+        "Hero Pistol Launch": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "launchMissile": {
+                "missileUnit": "Hero Pistol Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "Hero Pistol Launch",
+                "areaSearchEffect": "Hero Pistol Search",
+                "dynamicSearchArea": true
+            }
+        },
+        "Hero Pistol Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 0.75,
+                        "length": 1
+                    }
+                },
+                "maxUnitCount": 1,
+                "effect": "Hero Pistol ImpactSet",
+                "location": 4
+            }
+        },
+        "Hero Shotgun ConsumeAmmo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "removeBehavior": {
+                "behavior": "Hero Shotgun Ammo",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Hero Shotgun Create": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "persistent": {
+                "periodicCount": 6,
+                "startEffect": "Hero Shotgun ConsumeAmmo",
+                "location": 3,
+                "offsetStart": 7,
+                "offsetEnd": 3,
+                "periodicEffects": [
+                    "Hero Shotgun Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "explicitOffset": {
+                            "forward": 3.3,
+                            "right": -0.75
+                        }
+                    },
+                    {
+                        "explicitOffset": {
+                            "forward": 3.5,
+                            "right": -0.5
+                        }
+                    },
+                    {
+                        "explicitOffset": {
+                            "forward": 3.7,
+                            "right": -0.25
+                        }
+                    },
+                    {
+                        "explicitOffset": {
+                            "forward": 3.7,
+                            "right": 0.25
+                        }
+                    },
+                    {
+                        "explicitOffset": {
+                            "forward": 3.5,
+                            "right": 0.5
+                        }
+                    },
+                    {
+                        "explicitOffset": {
+                            "forward": 3.3,
+                            "right": -0.75
+                        }
+                    }
+                ]
+            }
+        },
+        "Hero Shotgun Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Hero Shotgun ImpactSet": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Hero Shotgun Damage",
+                    "Remove Source"
+                ]
+            }
+        },
+        "Hero Shotgun Launch": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "launchMissile": {
+                "missileUnit": "Hero Shotgun Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "Hero Shotgun Launch",
+                "areaSearchEffect": "Hero Shotgun Search",
+                "dynamicSearchArea": true
+            }
+        },
+        "Hero Shotgun Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 0.75,
+                        "length": 1
+                    }
+                },
+                "maxUnitCount": 1,
+                "effect": "Hero Shotgun ImpactSet",
+                "location": 4
+            }
+        },
+        "Item AssaultRifle ApplyAmmo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "Hero AssaultRifle Ammo",
+                "target": 1,
+                "stackCount": 24
+            }
+        },
+        "Item AssaultRifle PickUp Set": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Remove Source",
+                    "Item AssaultRifle ApplyAmmo",
+                    "Item Pickup FX Hook"
+                ]
+            }
+        },
+        "Item AssaultRifle Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "invulerable": 0
+                },
+                "effect": "Item AssaultRifle PickUp Set"
+            }
+        },
+        "Item AssaultRifle Spawn": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "spawn": {
+                "unit": "Item AssaultRifle",
+                "count": 1,
+                "ownerPlayId": 1,
+                "location": 5,
+                "spawnOnNavmesh": true
+            }
+        },
+        "Item FireOrb PickUp Set": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Remove Source",
+                    "PowerUp FireOrb Launch",
+                    "Item Pickup FX Hook"
+                ]
+            }
+        },
+        "Item FireOrb Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "invulerable": 0
+                },
+                "effect": "Item FireOrb PickUp Set"
+            }
+        },
+        "Item Freeze PickUp Set": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Remove Source",
+                    "PowerUp Freeze Search",
+                    "Item Pickup FX Hook"
+                ]
+            }
+        },
+        "Item Freeze Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "invulerable": 0
+                },
+                "effect": "Item Freeze PickUp Set"
+            }
+        },
+        "Item Freeze Spawn": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "spawn": {
+                "unit": "Item Freeze",
+                "count": 1,
+                "ownerPlayId": 1,
+                "location": 5,
+                "spawnOnNavmesh": true
+            }
+        },
+        "Item Pickup FX Hook": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "persistent": {
+                "periodicCount": 1,
+                "location": 4
+            }
+        },
+        "Item Rage PickUp Set": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Remove Source",
+                    "PowerUp Apply Rage",
+                    "Item Pickup FX Hook"
+                ]
+            }
+        },
+        "Item Rage Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "invulerable": 0
+                },
+                "effect": "Item Rage PickUp Set"
+            }
+        },
+        "Item Rage Spawn": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "spawn": {
+                "unit": "Item Rage",
+                "count": 1,
+                "ownerPlayId": 1,
+                "location": 5,
+                "spawnOnNavmesh": true
+            }
+        },
+        "Item Shotgun ApplyAmmo": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "Hero Shotgun Ammo",
+                "target": 1,
+                "stackCount": 8
+            }
+        },
+        "Item Shotgun PickUp Set": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "set": {
+                "effectList": [
+                    "Remove Source",
+                    "Item Shotgun ApplyAmmo",
+                    "Item Pickup FX Hook"
+                ]
+            }
+        },
+        "Item Shotgun Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "invulerable": 0
+                },
+                "effect": "Item Shotgun PickUp Set"
+            }
+        },
+        "Item Shotgun Spawn": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "spawn": {
+                "unit": "Item Shotgun",
+                "count": 1,
+                "ownerPlayId": 1,
+                "location": 5,
+                "spawnOnNavmesh": true
+            }
+        },
+        "PowerUp Apply Freeze": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "PowerUp Freeze Debuff",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "PowerUp Apply Rage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "applyBehavior": {
+                "behavior": "PowerUp Rage Buff",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "PowerUp FireOrb Damage": {
+            "prefix": "",
+            "template": false,
+            "parent": "",
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "PowerUp FireOrb Launch": {
+            "prefix": "",
+            "template": false,
+            "comment": "Launch location is \"Target Unit\" as the hero will be the target of 'Item FireOrb Pickup Set'",
+            "parent": "",
+            "launchMissile": {
+                "missileUnit": "PowerUp FireOrb Missile",
+                "launchLocation": 1,
+                "mover": "PowerUp FireOrb Orbiter",
+                "areaSearchEffect": "PowerUp FireOrb Search"
+            }
+        },
+        "PowerUp FireOrb Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.4
+                    }
+                },
+                "effect": "PowerUp FireOrb Damage",
+                "location": 4
+            }
+        },
+        "PowerUp Freeze Search": {
+            "prefix": "",
+            "template": false,
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 15
+                    }
+                },
+                "effect": "PowerUp Apply Freeze"
+            }
+        }
+    }
+}

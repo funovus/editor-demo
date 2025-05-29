@@ -1,0 +1,70 @@
+-- ==============================================================
+-- LIBRARIES
+-- ==============================================================
+
+local GMUI = require("GMUI")
+
+-- ==============================================================
+-- SCRIPTS
+-- ==============================================================
+
+local UI = {}
+
+-- ==============================================================
+-- FUNCTIONS
+-- ==============================================================
+
+function UI:InitializeGameInstructions(OnStartCallback)
+    DCEI.SetEnabledCameraClamp(false)
+    DCEI.SetCameraFocus(100, 100, 0, true)
+    DCEI.SetBlurredScreenCaptureAsBackground(true, 0.1875)
+
+    -- "Recursive Hookup" hookups includes as well, so we can reference included frame's children
+    -- The XML for the UI can be edited in the editors Data Window on the UI tab
+    -- In the editor, 'Window > UI Previewer' will allow you to preview the UI selected in the data window
+    self.game_instructions = GMUI.Layout.New({
+        name = "Game/Instructions",
+        recursive_hookup = true,
+    })
+
+    local function OnStartPress()
+        DCEI.SetEnabledCameraClamp(true)
+        DCEI.SetCameraFocus(16, 16, 0, true)
+        DCEI.SetBlurredScreenCaptureAsBackground(false, 0.1875)
+        self.game_instructions:Hide()
+        OnStartCallback()
+    end
+
+    -- GMUI layouts are lua dictionaries. We can add new methods or properities.
+    function self.game_instructions:AnimateFrames()
+        -- To learn more about easings, view www.easings.net
+        local anim = DCEI.AnimateFrameRotation(self.LogoImage, { z = -10 }, { z = 10 }, 3, "InOutBounce")
+        DCEI.SetFrameAnimationLoops(anim, -1, "Yoyo")
+
+        local k1 = { x = 0.9, y = 0.9, z = 0.9 }
+        local k2 = { x = 1.2, y = 1.2, z = 1.2 }
+        local anim = DCEI.AnimateFrameScale(self.LogoImage, k1, k2, 1.25, "InOutSine")
+        DCEI.SetFrameAnimationLoops(anim, -1, "Yoyo")
+    end
+    self.game_instructions:AnimateFrames()
+
+    DCEI.SetOnClickCallback(self.game_instructions.start_button.Frame, OnStartPress)
+end
+
+function UI:UpdateScoreUi(value)
+    local text = "Score: " .. tostring(value)
+    -- DCEI.ShowObjectiveText(text)
+end
+
+function UI:FadeToBlack(duration)
+    self.black_screen = GMUI.Layout.New({
+        name = "Game/BlackScreen",
+    })
+    DCEI.AnimateFrameAlpha(self.black_screen.Frame, 0, 1, duration, "Linear")
+end
+
+function UI:FadeIn(duration)
+    DCEI.AnimateFrameAlpha(self.black_screen.Frame, 1, 0, duration, "Linear")
+end
+
+return UI
