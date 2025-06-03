@@ -15,6 +15,7 @@ CodeCoverage/
 UserSettings/
 remote_config_data
 .vscode/
+GlobalEnvDef.d.tl
 
 *.swo
 *.swn
