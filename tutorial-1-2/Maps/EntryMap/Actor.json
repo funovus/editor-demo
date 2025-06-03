@@ -1,0 +1,27 @@
+{
+    "actors": {
+        "Hero IceMage": {
+            "prefix": "",
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "elvenmage"
+                },
+                "eventMacros": [
+                    "Events StandardUnit Selectable"
+                ],
+                "walkAnimationSpeed": 1.75
+            }
+        },
+        "Hero IceMage Missile": {
+            "prefix": "",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_icemage_weapon_missile"
+                }
+            }
+        }
+    }
+}
