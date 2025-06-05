@@ -1,0 +1,10 @@
+{
+    "abilities": {
+        "Ability Ice Spike": {
+            "effect": "Ability Ice Spike Delay",
+            "stats": {
+                "range": 99
+            }
+        }
+    }
+}

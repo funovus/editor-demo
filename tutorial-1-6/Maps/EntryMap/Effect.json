@@ -1,0 +1,40 @@
+{
+    "effects": {
+        "Ability Ice Spike Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Ability Ice Spike Delay": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "Ability Ice Spike Search",
+                "periodicDurations": [
+                    1.5
+                ]
+            }
+        },
+        "Ability Ice Spike Search": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 1
+                    }
+                },
+                "effect": "Ability Ice Spike Damage"
+            }
+        },
+        "Hero IceMage Weapon Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        },
+        "Hero IceMage Weapon Launch": {
+            "launchMissile": {
+                "missileUnit": "Hero IceMage Missile",
+                "effect": "Hero IceMage Weapon Damage",
+                "mover": "Hero IceMage Weapon Missile"
+            }
+        }
+    }
+}
