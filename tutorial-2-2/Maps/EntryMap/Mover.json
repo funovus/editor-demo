@@ -1,0 +1,17 @@
+{
+    "movers": {
+        "Ability Ice Blast Mover": {
+            "guidance": {
+                "acceleration": 5,
+                "speed": 5,
+                "maxSpeed": 10
+            }
+        },
+        "Hero IceMage Weapon Missile": {
+            "ballistic": {
+                "flightTime": 0.5,
+                "gravity": 12
+            }
+        }
+    }
+}
