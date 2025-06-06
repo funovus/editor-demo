@@ -1,0 +1,107 @@
+{
+    "effects": {
+        "Ability Ice Blast Damage": {
+            "damage": {
+                "damageAmount": 2,
+                "expressions": [
+                    {
+                        "if": {
+                            "condition": {
+                                "compare": {
+                                    "left": {
+                                        "value": {
+                                            "unitsDistance": {
+                                                "toUnit": 2
+                                            }
+                                        }
+                                    },
+                                    "op": 4,
+                                    "right": {
+                                        "value": {
+                                            "constant": {
+                                                "int32Value": 7
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "values": {
+                                "expressions": [
+                                    {
+                                        "add": {
+                                            "expressions": [
+                                                {
+                                                    "value": {
+                                                        "constant": {
+                                                            "int32Value": 3
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Ability Ice Blast Launch": {
+            "launchMissile": {
+                "missileUnit": "Ability Ice Blast Missile",
+                "effect": "Ability Ice Blast Damage",
+                "mover": "Ability Ice Blast Mover",
+                "areaSearchEffect": "Ability Ice Blast Search",
+                "arriveOnSearchHit": true
+            }
+        },
+        "Ability Ice Blast Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "debugDraw": true,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.5
+                    }
+                },
+                "effect": "Ability Ice Blast Damage"
+            }
+        },
+        "Ability Ice Spike Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Ability Ice Spike Delay": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "Ability Ice Spike Search",
+                "periodicDurations": [
+                    1.5
+                ]
+            }
+        },
+        "Ability Ice Spike Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {}
+                },
+                "effect": "Ability Ice Spike Damage"
+            }
+        },
+        "Hero IceMage Weapon Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        },
+        "Hero IceMage Weapon Launch": {
+            "launchMissile": {
+                "missileUnit": "Hero IceMage Missile",
+                "effect": "Hero IceMage Weapon Damage",
+                "mover": "Hero IceMage Weapon Missile"
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "abilities": {
+        "Ability Ice Blast": {
+            "abilityType": 1,
+            "targetRangeMode": 2,
+            "effect": "Ability Ice Blast Launch",
+            "stats": {
+                "prepTime": 0.5,
+                "finishTime": 0.5,
+                "period": 1,
+                "range": 10,
+                "arc": 60
+            },
+            "commandCardIcon": "icon_spell_ice_spike"
+        },
+        "Ability Ice Spike": {
+            "effect": "Ability Ice Spike Delay",
+            "stats": {
+                "range": 99
+            },
+            "commandCardIndex": -1
+        }
+    }
+}

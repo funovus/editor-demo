@@ -1,0 +1,37 @@
+{
+    "units": {
+        "Ability Ice Blast Missile": {
+            "template": false,
+            "baseUnit": "_CMissile"
+        },
+        "Hero IceMage": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "health": {
+                    "maxHealth": 100
+                },
+                "mana": {
+                    "maxMana": 100
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 30
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Hero IceMage Weapon"
+                ],
+                "abilityList": [
+                    "Ability Ice Spike",
+                    "Ability Ice Blast"
+                ]
+            },
+            "bindAbilityUi": true
+        },
+        "Hero IceMage Missile": {
+            "baseUnit": "_CMissile"
+        }
+    }
+}

@@ -1,0 +1,5 @@
+<UI xmlns:bind="https://platform.wildsky.dev/xml/ui/bind">
+    <Button layout="flex" height="100" width="200" verticalOffsetInParent="270" name="Basic Button">
+        <Text text="Button Label" />
+    </Button>
+</UI>
